@@ -58,7 +58,6 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         enter_player("testy"+i, (int) (Math.random()*60+1));
         i++;
-        System.out.println("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
         mAdapter.notifyDataSetChanged();
     }
 

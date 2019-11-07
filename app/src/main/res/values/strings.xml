@@ -3,4 +3,5 @@
     <string name="head">head</string>
     <string name="textview">textview</string>
     <string name="play">play</string>
+    <string name="help">help</string>
 </resources>

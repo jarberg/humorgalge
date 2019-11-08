@@ -1,5 +1,6 @@
 package main.galgeleg;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,14 +40,26 @@ public class GameActivity extends Activity implements OnItemClickListener {
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.letter, R.id.test, letters);
 
         GridView gridView = findViewById(R.id.letters);
-        //gridView.setOnItemClickListener(this);
+
         gridView.setAdapter(adapter);
         spil.nulstil();
-        try {
-            spil.hentOrdFraRegneark("3");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        Runnable runnable = () -> {
+            try {
+                spil.hentOrdFraDr();
+                System.out.println("success");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally{
+
+            }
+        };
+
+        Thread t = new Thread(runnable);
+        t.start();
+
         spil.logStatus();
         wordString();
 
@@ -59,7 +72,6 @@ public class GameActivity extends Activity implements OnItemClickListener {
     }
 
     public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-
         System.out.println("hello"+ id);
 
     }
@@ -79,6 +91,10 @@ public class GameActivity extends Activity implements OnItemClickListener {
         v.setBackgroundResource(R.drawable.letter_down);
         spil.gætBogstav(String.valueOf(Character.toLowerCase(ltr.charAt(0))));
         spil.logStatus();
+        if(spil.erSpilletSlut()){
+            Intent i = new Intent(this, HighScore.class);
+            startActivity(i);
+        }
         for (int i = 0; i <spil.getAntalForkerteBogstaver() ; i++) {
             bodyParts[i].setVisibility(View.VISIBLE);
         }
@@ -86,23 +102,22 @@ public class GameActivity extends Activity implements OnItemClickListener {
         wordString();
         adapter2 = new ArrayAdapter<>(this, R.layout.word, R.id.textLetter, word);
         wordView.setAdapter(adapter2);
+        if(spil.erSpilletSlut()){
+            Intent i = new Intent(this, HighScore.class);
+            startActivity(i);
+        }
     }
     public void createbodylinks(){
-
         bodyParts = new ImageView[numParts];
-
         bodyParts[0] = findViewById(R.id.head);
         bodyParts[1] = findViewById(R.id.torso);
         bodyParts[2] = findViewById(R.id.leftArm);
         bodyParts[3] = findViewById(R.id.rightArm);
         bodyParts[4] = findViewById(R.id.leftLeg);
         bodyParts[5] = findViewById(R.id.rightLeg);
-
         for(int p = 0; p < numParts; p++) {
             bodyParts[p].setVisibility(View.INVISIBLE);
             System.out.println(bodyParts[p].getId()+" is now "+bodyParts[p].getVisibility());
         }
-
     }
-
 }

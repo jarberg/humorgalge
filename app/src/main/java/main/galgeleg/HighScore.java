@@ -33,15 +33,8 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_screen_highscore);
 
-        SharedPreferences sp = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-
-        editor.clear().commit();
 
         loadSet();
-
-        nameList.add("test");
-        scoreList.add(3);
 
         RecyclerView recyclerView = this.findViewById(R.id.devicerecycler);
         mAdapter = new DeviceAdapter(nameList, scoreList, this);
@@ -103,6 +96,10 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
       }
 
       public void enter_player(String name, int score){
+        if(nameList.size() == 0){
+            nameList.add(name);
+            scoreList.add(score);
+        }
           for (int i = 0; i < nameList.size(); i++) {
               if(scoreList.get(i) < score ){
                   shift(i,nameList.size()-1);
@@ -129,6 +126,10 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
             }
             i--;
         }
+      }
+
+      public void exitDialog(){
+
       }
 }
 

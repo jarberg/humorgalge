@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gallow">
@@ -22,8 +21,6 @@
         android:layout_width="89dp"
         android:layout_height="86dp"
         android:layout_marginTop="80dp"
-
-        android:contentDescription="@string/head"
         android:src="@drawable/head"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.413"
@@ -38,7 +35,8 @@
         android:layout_marginTop="72dp"
         android:src="@drawable/leftarm"
         app:layout_constraintStart_toStartOf="@+id/head"
-        app:layout_constraintTop_toTopOf="@+id/head" />
+        app:layout_constraintTop_toTopOf="@+id/head"
+        android:layout_marginLeft="64dp" />
 
     <ImageView
         android:id="@+id/rightArm"
@@ -48,7 +46,8 @@
         android:layout_marginEnd="36dp"
         android:src="@drawable/rightarm"
         app:layout_constraintEnd_toStartOf="@+id/leftArm"
-        app:layout_constraintTop_toTopOf="@+id/head" />
+        app:layout_constraintTop_toTopOf="@+id/head"
+        android:layout_marginRight="36dp" />
 
     <ImageView
         android:id="@+id/rightLeg"
@@ -66,7 +65,8 @@
         android:layout_marginTop="172dp"
         app:layout_constraintStart_toStartOf="@+id/rightLeg"
         app:layout_constraintTop_toTopOf="@+id/head"
-        android:src="@drawable/leftleg" />
+        android:src="@drawable/leftleg"
+        android:layout_marginLeft="36dp" />
     <GridView
         android:id="@+id/letters"
         android:layout_width="match_parent"
@@ -85,13 +85,13 @@
     <GridView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="#E8E8E8"
         android:text="@string/textview"
         android:horizontalSpacing="1dp"
         app:layout_constraintBottom_toTopOf="@+id/letters"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent" />
 
 

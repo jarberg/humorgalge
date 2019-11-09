@@ -17,7 +17,7 @@ public class GameActivity extends Activity implements OnItemClickListener {
     //number of body parts
     private int numParts=6;
     private String[] letters;
-    GaleLogik spil = new GaleLogik();
+    GaleLogik spil = GaleLogik.get();
     String word[];
     char temp[];
     GridView wordView;
@@ -34,7 +34,7 @@ public class GameActivity extends Activity implements OnItemClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        spil.hentordfradrViaThread();
         createbodylinks();
 
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.letter, R.id.test, letters);
@@ -42,30 +42,15 @@ public class GameActivity extends Activity implements OnItemClickListener {
         GridView gridView = findViewById(R.id.letters);
 
         gridView.setAdapter(adapter);
-        spil.nulstil();
 
-        Runnable runnable = () -> {
-            try {
-                spil.hentOrdFraDr();
-                System.out.println("success");
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            finally{
 
-            }
-        };
-
-        Thread t = new Thread(runnable);
-        t.start();
 
         spil.logStatus();
         wordString();
 
         adapter2 = new ArrayAdapter<>(this, R.layout.word, R.id.textLetter, word);
         wordView = findViewById(R.id.textView);
-        //gridView.setOnItemClickListener(this);
+
 
         wordView.setNumColumns(temp.length);
         wordView.setAdapter(adapter2);
@@ -77,6 +62,11 @@ public class GameActivity extends Activity implements OnItemClickListener {
     }
 
     public void wordString(){
+        try {
+            spil.t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         temp = spil.getSynligtOrd().toCharArray();
         word =new String[temp.length];
         for (int i = 0; i < temp.length ; i++) {

@@ -19,8 +19,17 @@ public class GaleLogik {
     private boolean sidsteBogstavVarKorrekt;
     private boolean spilletErVundet;
     private boolean spilletErTabt;
+    Thread t;
 
-    public GaleLogik() {
+    private static GaleLogik object = new GaleLogik();
+
+    public static GaleLogik get(){
+        return object;
+    }
+
+
+    private GaleLogik() {
+        /*
         muligeOrd.add("bil");
         muligeOrd.add("computer");
         muligeOrd.add("programmering");
@@ -30,7 +39,10 @@ public class GaleLogik {
         muligeOrd.add("skovsnegl");
         muligeOrd.add("solsort");
         muligeOrd.add("nitten");
-        nulstil();
+*/
+
+
+        //nulstil();
     }
 
     public ArrayList<String> getBrugteBogstaver() {
@@ -196,5 +208,24 @@ public class GaleLogik {
 
         System.out.println("muligeOrd = " + muligeOrd);
         nulstil();
+    }
+
+    public void hentordfradrViaThread(){
+        Runnable runnable = () -> {
+            try {
+                hentOrdFraDr();
+                System.out.println("success");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally{
+
+            }
+        };
+
+        t = new Thread(runnable);
+        t.start();
+
     }
 }

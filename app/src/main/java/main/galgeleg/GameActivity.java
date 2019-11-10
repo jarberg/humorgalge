@@ -1,11 +1,16 @@
 package main.galgeleg;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +36,7 @@ public class GameActivity extends Activity implements OnItemClickListener {
         letters[26] = "Æ";
         letters[27] = "Ø";
         letters[28] = "Å";
+
     }
 
 
@@ -75,32 +81,44 @@ public class GameActivity extends Activity implements OnItemClickListener {
 
     public void letterPressed(View v){
         String ltr=((TextView)v).getText().toString();
-        System.out.println(ltr);
-        v.setEnabled(false);
-        v.setBackgroundResource(R.drawable.letter_down);
-        spil.gætBogstav(String.valueOf(Character.toLowerCase(ltr.charAt(0))));
-        spil.logStatus();
+        if(!ltr.equals("guess")){
 
-        if(spil.erSpilletSlut()){
+            v.setEnabled(false);
+            v.setBackgroundResource(R.drawable.letter_down);
+            spil.gætBogstav(String.valueOf(Character.toLowerCase(ltr.charAt(0))));
+            spil.logStatus();
 
-            int score = (spil.getBrugteBogstaver().size()-spil.getAntalForkerteBogstaver())/(spil.getBrugteBogstaver().size());
+            if(spil.erSpilletSlut()){
+                float main = spil.getBrugteBogstaver().size();
+                float sec = spil.getAntalForkerteBogstaver();
+                float temp = ((main-sec)/main)*100;
+                int score = (int) temp;
 
-            Intent i = new Intent(this, Screen_end.class);
-            i.putExtra("gamestate", spil.erSpilletVundet());
-            i.putExtra("score", score);
-            startActivity(i);
+                Intent i = new Intent(this, Screen_end.class);
+                i.putExtra("gamestate", spil.erSpilletVundet());
+                i.putExtra("score", score);
+                i.putExtra("ord", spil.getOrdet());
+                i.putExtra("attempts", spil.getBrugteBogstaver());
+                startActivity(i);
+                finish();
+            }
 
+
+            for (int i = 0; i < spil.getAntalForkerteBogstaver() ; i++) {
+                bodyParts[i].setVisibility(View.VISIBLE);
+            }
+
+            wordView.setAdapter(null);
+            wordString();
+            adapter2 = new ArrayAdapter<>(this, R.layout.word, R.id.textLetter, word);
+            wordView.setAdapter(adapter2);
         }
+        else{
 
+            EditText guessview = findViewById(R.id.guesstext);
 
-        for (int i = 0; i < spil.getAntalForkerteBogstaver() ; i++) {
-            bodyParts[i].setVisibility(View.VISIBLE);
+            showKeyboard(guessview, this);
         }
-
-        wordView.setAdapter(null);
-        wordString();
-        adapter2 = new ArrayAdapter<>(this, R.layout.word, R.id.textLetter, word);
-        wordView.setAdapter(adapter2);
  
     }
     public void createbodylinks(){
@@ -116,4 +134,20 @@ public class GameActivity extends Activity implements OnItemClickListener {
             System.out.println(bodyParts[p].getId()+" is now "+bodyParts[p].getVisibility());
         }
     }
+    public void showKeyboard(EditText mEtSearch, Context context) {
+        mEtSearch.requestFocus();
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+
+    }
+
+    public void hideSoftKeyboard(EditText mEtSearch, Context context) {
+        mEtSearch.clearFocus();
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
+
+
+    }
+
 }

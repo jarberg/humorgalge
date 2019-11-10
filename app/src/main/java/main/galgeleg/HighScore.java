@@ -46,7 +46,7 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
         if (getIntent().hasExtra("name" ) && getIntent().hasExtra("score")) {
             nameData = getIntent().getStringExtra("name");
             scoreData = getIntent().getIntExtra("score",0);
-            enter_player(nameData+"", scoreData*100);
+            enter_player(nameData+"", scoreData);
         }
 
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -64,6 +64,7 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
         SharedPreferences.Editor editor = sp.edit();
 
         editor.clear().apply();
+        finish();
     }
 
     public void loadSet(){

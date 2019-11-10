@@ -11,7 +11,7 @@
         android:id="@+id/nameview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Anon"
+        android:hint="indtast navn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -33,14 +33,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Neeeei. du gættede ordet"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintBottom_toTopOf="@+id/ordview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.784" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/ordview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
@@ -61,5 +61,6 @@
         app:layout_constraintBottom_toTopOf="@+id/nameview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/ordview" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

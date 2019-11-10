@@ -36,6 +36,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
@@ -107,6 +108,23 @@
             android:src="@drawable/leftleg"
             app:layout_constraintStart_toStartOf="@+id/rightLeg"
             app:layout_constraintTop_toTopOf="@+id/head" />
+
+        <EditText
+            android:id="@+id/guesstext"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/guessbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guess"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

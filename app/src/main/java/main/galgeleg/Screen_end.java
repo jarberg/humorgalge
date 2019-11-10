@@ -8,25 +8,32 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Screen_end extends AppCompatActivity implements View.OnClickListener {
 
         Button btn1Win;
+        TextView attemptsView;
+        TextView wordview;
 
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-
         Boolean yourDataObject = null;
+        String attempts = "";
+        String ordet = "";
 
-        if (getIntent().hasExtra("gamestate")) {
+        if (getIntent().hasExtra("gamestate") && getIntent().hasExtra("ord") && getIntent().hasExtra("attempts")) {
             yourDataObject = getIntent().getBooleanExtra("gamestate", false);
+            ordet = getIntent().getStringExtra("ord");
+            attempts = getIntent().getStringExtra("attempts");
+
+
+
             if (yourDataObject) {
                 setContentView(R.layout.layout_screen_winner);
                 btn1Win = findViewById(R.id.accept);
@@ -38,6 +45,13 @@ public class Screen_end extends AppCompatActivity implements View.OnClickListene
             } else {
                 setContentView(R.layout.layout_dialog_loser);
             }
+
+            attemptsView = findViewById(R.id.forsoeg);
+            wordview = findViewById(R.id.ordview);
+
+            attemptsView.setText(attempts);
+            wordview.setText(ordet);
+
         } else {
             throw new IllegalArgumentException("Activity cannot find  extras " + "gamestate");
         }
@@ -70,9 +84,13 @@ public class Screen_end extends AppCompatActivity implements View.OnClickListene
             hideSoftKeyboard(tester, this);
             int score = getIntent().getExtras().getInt("score");
             Intent i = new Intent(this, HighScore.class);
-            i.putExtra("name",tester.getText()+"");
+
+            String temp = tester.equals("") ? "Anon" : tester.getText()+"" ;
+
+            i.putExtra("name",temp+"");
             i.putExtra("score",score);
             startActivity(i);
+            finish();
         }
     }
 }

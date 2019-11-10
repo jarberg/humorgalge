@@ -1,8 +1,11 @@
 package main.galgeleg;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -33,25 +36,34 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_screen_highscore);
 
+        String nameData = null;
+        int scoreData = 0;
 
         loadSet();
 
         RecyclerView recyclerView = this.findViewById(R.id.devicerecycler);
         mAdapter = new DeviceAdapter(nameList, scoreList, this);
+        if (getIntent().hasExtra("name" ) && getIntent().hasExtra("score")) {
+            nameData = getIntent().getStringExtra("name");
+            scoreData = getIntent().getIntExtra("score",0);
+            enter_player(nameData+"", scoreData*100);
+        }
 
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+        saveSet();
 
     }
 
     @Override
     public void onClick(View v) {
-        enter_player("testy"+i, (int) (Math.random()*60+1));
-        i++;
-        mAdapter.notifyDataSetChanged();
+        SharedPreferences sp = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.clear().apply();
     }
 
     public void loadSet(){
@@ -84,30 +96,47 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
         SharedPreferences sp = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
 
-        editor.clear().commit();
+        editor.clear().apply();
 
         editor.putString(KEY_NAME, nameList.toString());
         editor.commit();
         editor.putString(KEY_SCORE, scoreList.toString());
         editor.commit();
-        nameList.clear();
-        scoreList.clear();
+
 
       }
 
       public void enter_player(String name, int score){
+        boolean changed = false;
         if(nameList.size() == 0){
             nameList.add(name);
             scoreList.add(score);
         }
-          for (int i = 0; i < nameList.size(); i++) {
-              if(scoreList.get(i) < score ){
-                  shift(i,nameList.size()-1);
-                  nameList.set(i, name);
-                  scoreList.set(i,score);
-                  break;
-              }
-          }
+        else{
+            for (int i = 0; i < nameList.size(); i++) {
+                if(scoreList.get(i) < score ){
+                    shift(i,nameList.size()-1);
+                    nameList.set(i, name);
+                    scoreList.set(i,score);
+                    changed = true;
+                    break;
+                }
+                else if(scoreList.get(i) == score){
+                    shift(i,nameList.size()-1);
+                    nameList.set(i, name);
+                    scoreList.set(i,score);
+                    changed = true;
+                    break;
+                }
+            }
+            if(!changed && nameList.size() < 20){
+                nameList.add(name);
+                scoreList.add(score);
+            }
+
+        }
+
+          mAdapter.notifyDataSetChanged();
       }
 
       public void shift(int index, int end){
@@ -128,8 +157,5 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
         }
       }
 
-      public void exitDialog(){
-
-      }
 }
 

@@ -22,11 +22,15 @@ public class GameActivity extends Activity implements OnItemClickListener {
     char temp[];
     GridView wordView;
     ArrayAdapter<String> adapter2;
+
     public GameActivity(){
-        letters =new String[26];
+        letters =new String[29];
         for (int a = 0; a < letters.length; a++) {
             letters[a] = String.valueOf((char)(a+'A'));
         }
+        letters[26] = "Æ";
+        letters[27] = "Ø";
+        letters[28] = "Å";
     }
 
 
@@ -34,7 +38,7 @@ public class GameActivity extends Activity implements OnItemClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        spil.hentordfradrViaThread();
+
         createbodylinks();
 
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.letter, R.id.test, letters);
@@ -62,11 +66,6 @@ public class GameActivity extends Activity implements OnItemClickListener {
     }
 
     public void wordString(){
-        try {
-            spil.t.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         temp = spil.getSynligtOrd().toCharArray();
         word =new String[temp.length];
         for (int i = 0; i < temp.length ; i++) {
@@ -81,21 +80,28 @@ public class GameActivity extends Activity implements OnItemClickListener {
         v.setBackgroundResource(R.drawable.letter_down);
         spil.gætBogstav(String.valueOf(Character.toLowerCase(ltr.charAt(0))));
         spil.logStatus();
+
         if(spil.erSpilletSlut()){
-            Intent i = new Intent(this, HighScore.class);
+
+            int score = (spil.getBrugteBogstaver().size()-spil.getAntalForkerteBogstaver())/(spil.getBrugteBogstaver().size());
+
+            Intent i = new Intent(this, Screen_end.class);
+            i.putExtra("gamestate", spil.erSpilletVundet());
+            i.putExtra("score", score);
             startActivity(i);
+
         }
-        for (int i = 0; i <spil.getAntalForkerteBogstaver() ; i++) {
+
+
+        for (int i = 0; i < spil.getAntalForkerteBogstaver() ; i++) {
             bodyParts[i].setVisibility(View.VISIBLE);
         }
+
         wordView.setAdapter(null);
         wordString();
         adapter2 = new ArrayAdapter<>(this, R.layout.word, R.id.textLetter, word);
         wordView.setAdapter(adapter2);
-        if(spil.erSpilletSlut()){
-            Intent i = new Intent(this, HighScore.class);
-            startActivity(i);
-        }
+ 
     }
     public void createbodylinks(){
         bodyParts = new ImageView[numParts];

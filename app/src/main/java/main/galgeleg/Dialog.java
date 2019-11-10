@@ -53,7 +53,7 @@ public class Dialog extends DialogFragment implements View.OnClickListener {
         view.findViewById(R.id.cancel).setOnClickListener(this);
         btn1 = view.findViewById(R.id.accept);
         btn1.setOnClickListener(this);
-        //btn1.setBackgroundDrawable((new ColorDrawable(Color.TRANSPARENT)));
+        //btn1Win.setBackgroundDrawable((new ColorDrawable(Color.TRANSPARENT)));
         btn2 = view.findViewById(R.id.cancel);
         btn2.setOnClickListener(this);
         //btn2.setBackgroundDrawable((new ColorDrawable(Color.TRANSPARENT)));

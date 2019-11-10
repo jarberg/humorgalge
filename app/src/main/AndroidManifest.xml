@@ -22,6 +22,9 @@
         <activity android:name=".GameActivity">
 
         </activity>
+        <activity android:name=".Screen_end">
+
+        </activity>
     </application>
 
 </manifest>

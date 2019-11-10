@@ -8,18 +8,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import main.galgeleg.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btn1;
     Button btn2;
+    GaleLogik spil = GaleLogik.get();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        spil.hentordfradrViaThread();
+        try {
+            spil.t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         btn1 = findViewById(R.id.playBtn);
         btn1.setOnClickListener(this);
         btn2 = findViewById(R.id.helpbtn);

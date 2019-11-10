@@ -53,18 +53,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             showEditDialog();
         }
     }
-
-    public static void showKeyboard(EditText mEtSearch, Context context) {
-        mEtSearch.requestFocus();
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-    }
-
-    public static void hideSoftKeyboard(EditText mEtSearch, Context context) {
-        mEtSearch.clearFocus();
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
-
-
-    }
 }

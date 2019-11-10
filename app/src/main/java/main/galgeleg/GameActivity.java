@@ -10,13 +10,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GameActivity extends Activity implements OnItemClickListener {
+public class GameActivity extends Activity implements OnItemClickListener, View.OnClickListener {
     //body part images
     private ImageView[] bodyParts;
     //number of body parts
@@ -27,6 +28,9 @@ public class GameActivity extends Activity implements OnItemClickListener {
     char temp[];
     GridView wordView;
     ArrayAdapter<String> adapter2;
+    Button btnGues;
+    EditText guessview;
+    int gætforsoeg=0;
 
     public GameActivity(){
         letters =new String[29];
@@ -36,40 +40,66 @@ public class GameActivity extends Activity implements OnItemClickListener {
         letters[26] = "Æ";
         letters[27] = "Ø";
         letters[28] = "Å";
-
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
         createbodylinks();
-
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.letter, R.id.test, letters);
-
         GridView gridView = findViewById(R.id.letters);
-
         gridView.setAdapter(adapter);
-
-
-
         spil.logStatus();
         wordString();
-
         adapter2 = new ArrayAdapter<>(this, R.layout.word, R.id.textLetter, word);
         wordView = findViewById(R.id.textView);
-
-
         wordView.setNumColumns(temp.length);
         wordView.setAdapter(adapter2);
+        guessview = findViewById(R.id.guesstext);
+        guessview.setOnClickListener(this);
+        btnGues = findViewById(R.id.guessbtn);
+        btnGues.setOnClickListener(this);
+        showKeyboard(guessview, this);
     }
 
     public void onItemClick(AdapterView<?> l, View v, int position, long id) {
         System.out.println("hello"+ id);
 
     }
+
+    @Override
+    public void onClick(View v) {
+        if(v.equals(btnGues)){
+            guessword(guessview.getText().toString());
+        }
+        else if(v == guessview){
+
+        }
+    }
+    public void guessword(String guess){
+        if(spil.getOrdet().equals(guess)){
+            float main = spil.getBrugteBogstaver().size();
+            float sec = spil.getAntalForkerteBogstaver();
+            float temp = ((main-sec)/main)*100;
+            int score = (int) temp;
+
+            Intent i = new Intent(this, Screen_end.class);
+            i.putExtra("gamestate", true);
+            i.putExtra("score", score);
+            i.putExtra("ord", spil.getOrdet());
+            i.putExtra("attempts", spil.getBrugteBogstaver().size()+gætforsoeg);
+            startActivity(i);
+            finish();
+        }
+        else{
+            guessview.setText("");
+            gætforsoeg++;
+            Toast.makeText(this, "FORKERT!!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
     public void wordString(){
         temp = spil.getSynligtOrd().toCharArray();
@@ -81,7 +111,6 @@ public class GameActivity extends Activity implements OnItemClickListener {
 
     public void letterPressed(View v){
         String ltr=((TextView)v).getText().toString();
-        if(!ltr.equals("guess")){
 
             v.setEnabled(false);
             v.setBackgroundResource(R.drawable.letter_down);
@@ -98,27 +127,20 @@ public class GameActivity extends Activity implements OnItemClickListener {
                 i.putExtra("gamestate", spil.erSpilletVundet());
                 i.putExtra("score", score);
                 i.putExtra("ord", spil.getOrdet());
-                i.putExtra("attempts", spil.getBrugteBogstaver().size());
+                i.putExtra("attempts", spil.getBrugteBogstaver().size()+gætforsoeg);
                 startActivity(i);
                 finish();
             }
             for (int i = 0; i < spil.getAntalForkerteBogstaver()%7 ; i++) {
                 bodyParts[i].setVisibility(View.VISIBLE);
             }
-
             wordView.setAdapter(null);
             wordString();
             adapter2 = new ArrayAdapter<>(this, R.layout.word, R.id.textLetter, word);
             wordView.setAdapter(adapter2);
         }
-        else{
 
-            EditText guessview = findViewById(R.id.guesstext);
 
-            showKeyboard(guessview, this);
-        }
- 
-    }
     public void createbodylinks(){
         bodyParts = new ImageView[numParts];
         bodyParts[0] = findViewById(R.id.head);
@@ -135,17 +157,15 @@ public class GameActivity extends Activity implements OnItemClickListener {
     public void showKeyboard(EditText mEtSearch, Context context) {
         mEtSearch.requestFocus();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
-
+        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        hideSoftKeyboard(mEtSearch, context);
     }
 
     public void hideSoftKeyboard(EditText mEtSearch, Context context) {
         mEtSearch.clearFocus();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
-
-
     }
+
 
 }

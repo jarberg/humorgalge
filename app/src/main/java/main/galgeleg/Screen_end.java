@@ -39,12 +39,9 @@ public class Screen_end extends AppCompatActivity implements View.OnClickListene
             }
             else {
                 setContentView(R.layout.layout_screen_loser);
-
-
                 btn1loss = findViewById(R.id.Restart);
                 btn1loss.setOnClickListener(this);
             }
-
             attemptsView = findViewById(R.id.attempts);
             attemptsView.setText(String.valueOf(attempts));
             wordview = findViewById(R.id.ordview);
@@ -54,7 +51,6 @@ public class Screen_end extends AppCompatActivity implements View.OnClickListene
             throw new IllegalArgumentException("Activity cannot find  extras " + "gamestate");
         }
     }
-
 
     public static void showKeyboard(EditText mEtSearch, Context context) {
         mEtSearch.requestFocus();

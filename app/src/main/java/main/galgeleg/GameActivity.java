@@ -98,13 +98,11 @@ public class GameActivity extends Activity implements OnItemClickListener {
                 i.putExtra("gamestate", spil.erSpilletVundet());
                 i.putExtra("score", score);
                 i.putExtra("ord", spil.getOrdet());
-                i.putExtra("attempts", spil.getBrugteBogstaver());
+                i.putExtra("attempts", spil.getBrugteBogstaver().size());
                 startActivity(i);
                 finish();
             }
-
-
-            for (int i = 0; i < spil.getAntalForkerteBogstaver() ; i++) {
+            for (int i = 0; i < spil.getAntalForkerteBogstaver()%7 ; i++) {
                 bodyParts[i].setVisibility(View.VISIBLE);
             }
 

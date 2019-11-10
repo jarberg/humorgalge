@@ -1,9 +1,11 @@
 package main.galgeleg;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +24,8 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
     private static final String KEY_NAME = "key_username";
     private static final String KEY_SCORE = "key_score";
     int i =1;
+
+    Button btnRestart;
     private List<String> nameList;
     public List<Integer> scoreList;
     private DeviceAdapter mAdapter;
@@ -36,6 +40,8 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_screen_highscore);
 
+        btnRestart = findViewById(R.id.Restart);
+        btnRestart.setOnClickListener(this);
         String nameData = null;
         int scoreData = 0;
 
@@ -60,11 +66,17 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        SharedPreferences sp = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
+       if(!v.equals(btnRestart)){
+           SharedPreferences sp = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+           SharedPreferences.Editor editor = sp.edit();
 
-        editor.clear().apply();
-        finish();
+           editor.clear().apply();
+       }
+       else{
+           Intent i = new Intent(this, MainActivity.class);
+           startActivity(i);
+           finish();
+       }
     }
 
     public void loadSet(){

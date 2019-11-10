@@ -1,5 +1,7 @@
 package main.galgeleg;
 
+import android.provider.Settings;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +13,7 @@ import java.util.Random;
 
 public class GaleLogik {
     /** AHT afprøvning er muligeOrd synlig på pakkeniveau */
+
     ArrayList<String> muligeOrd = new ArrayList<String>();
     private String ordet;
     private ArrayList<String> brugteBogstaver = new ArrayList<String>();

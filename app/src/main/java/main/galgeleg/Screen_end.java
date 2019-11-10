@@ -15,51 +15,44 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Screen_end extends AppCompatActivity implements View.OnClickListener {
 
         Button btn1Win;
+        Button btn1loss;
         TextView attemptsView;
         TextView wordview;
-
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Boolean yourDataObject = null;
-        String attempts = "";
+        int attempts = 0;
         String ordet = "";
 
         if (getIntent().hasExtra("gamestate") && getIntent().hasExtra("ord") && getIntent().hasExtra("attempts")) {
             yourDataObject = getIntent().getBooleanExtra("gamestate", false);
             ordet = getIntent().getStringExtra("ord");
-            attempts = getIntent().getStringExtra("attempts");
-
-
-
+            attempts = getIntent().getExtras().getInt("attempts");
             if (yourDataObject) {
                 setContentView(R.layout.layout_screen_winner);
                 btn1Win = findViewById(R.id.accept);
                 btn1Win.setOnClickListener(this);
-
                 EditText tester= findViewById(R.id.nameview);
                 showKeyboard(tester, this);
+            }
+            else {
+                setContentView(R.layout.layout_screen_loser);
 
-            } else {
-                setContentView(R.layout.layout_dialog_loser);
+
+                btn1loss = findViewById(R.id.Restart);
+                btn1loss.setOnClickListener(this);
             }
 
-            attemptsView = findViewById(R.id.forsoeg);
+            attemptsView = findViewById(R.id.attempts);
+            attemptsView.setText(String.valueOf(attempts));
             wordview = findViewById(R.id.ordview);
-
-            attemptsView.setText(attempts);
             wordview.setText(ordet);
-
-        } else {
+        }
+        else {
             throw new IllegalArgumentException("Activity cannot find  extras " + "gamestate");
         }
-
-
-
-
-
     }
 
 
@@ -73,8 +66,6 @@ public class Screen_end extends AppCompatActivity implements View.OnClickListene
         mEtSearch.clearFocus();
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
-
-
     }
 
     @Override
@@ -89,6 +80,11 @@ public class Screen_end extends AppCompatActivity implements View.OnClickListene
 
             i.putExtra("name",temp+"");
             i.putExtra("score",score);
+            startActivity(i);
+            finish();
+        }
+        if(v == btn1loss){
+            Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             finish();
         }

@@ -53,7 +53,18 @@
         app:layout_constraintVertical_bias="0.607" />
 
     <TextView
-        android:id="@+id/forsoeg"
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="antal forsøg på at gætte ordet"
+        app:layout_constraintBottom_toTopOf="@+id/attempts"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ordview"
+        app:layout_constraintVertical_bias="1.0" />
+    <TextView
+        android:id="@+id/attempts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"

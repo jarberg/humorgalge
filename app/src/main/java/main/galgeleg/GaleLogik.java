@@ -31,8 +31,13 @@ public class GaleLogik {
     }
 
 
-    private GaleLogik() {
-        /*
+    private GaleLogik()  {
+        try {
+            hentordfradrViaThread();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         muligeOrd.add("bil");
         muligeOrd.add("computer");
         muligeOrd.add("programmering");
@@ -42,10 +47,6 @@ public class GaleLogik {
         muligeOrd.add("skovsnegl");
         muligeOrd.add("solsort");
         muligeOrd.add("nitten");
-*/
-
-
-        //nulstil();
     }
 
     public ArrayList<String> getBrugteBogstaver() {

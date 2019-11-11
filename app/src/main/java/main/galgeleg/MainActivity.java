@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import static java.lang.Thread.sleep;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -23,12 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        spil.hentordfradrViaThread();
-        try {
-            spil.t.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         btn1 = findViewById(R.id.playBtn);
         btn1.setOnClickListener(this);
         btn2 = findViewById(R.id.helpbtn);
@@ -46,6 +44,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if( v == btn1 ){
             Intent i = new Intent(this, GameActivity.class);
+            try {
+                if(spil.t.isAlive()){
+                    Toast.makeText(this, "Henter ord fra dr", Toast.LENGTH_SHORT).show();
+                }
+                spil.t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             spil.nulstil();
             startActivity(i);
         }

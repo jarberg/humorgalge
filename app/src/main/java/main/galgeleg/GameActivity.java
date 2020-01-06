@@ -86,6 +86,7 @@ public class GameActivity extends Activity implements OnItemClickListener, View.
 
             Intent i = new Intent(this, Screen_end.class);
             i.putExtra("gamestate", true);
+            i.putExtra("addname", true);
             i.putExtra("score", score);
             i.putExtra("ord", spil.getOrdet());
             i.putExtra("attempts", spil.getBrugteBogstaver().size()+gætforsoeg);
@@ -128,6 +129,7 @@ public class GameActivity extends Activity implements OnItemClickListener, View.
                 i.putExtra("score", score);
                 i.putExtra("ord", spil.getOrdet());
                 i.putExtra("attempts", spil.getBrugteBogstaver().size()+gætforsoeg);
+                i.putExtra("addname", true);
                 startActivity(i);
                 finish();
             }

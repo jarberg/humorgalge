@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.Objects;
+
 
 public class Dialog extends DialogFragment implements View.OnClickListener {
 
@@ -48,17 +50,16 @@ public class Dialog extends DialogFragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        assert getArguments() != null;
         String title = getArguments().getString("title", "Enter Name");
-        getDialog().setTitle(title);
+        Objects.requireNonNull(getDialog()).setTitle(title);
         view.findViewById(R.id.cancel).setOnClickListener(this);
         btn1 = view.findViewById(R.id.accept);
         btn1.setOnClickListener(this);
-        //btn1Win.setBackgroundDrawable((new ColorDrawable(Color.TRANSPARENT)));
         btn2 = view.findViewById(R.id.cancel);
         btn2.setOnClickListener(this);
-        //btn2.setBackgroundDrawable((new ColorDrawable(Color.TRANSPARENT)));
         TextView titel = view.findViewById(R.id.Titel);
-        titel.setText("Hello");
+        titel.setText(R.string.greet);
         TextView tekst = view.findViewById(R.id.Text);
         tekst.setText(getArguments().getString("text", "forklaring" ));
         view.setFadingEdgeLength(5);
@@ -69,11 +70,8 @@ public class Dialog extends DialogFragment implements View.OnClickListener {
         Intent intent = new Intent(getActivity(), test.getClass());
         if(v==btn1){
             startActivity(intent);
-            Toast.makeText(this.getActivity(), "accept", Toast.LENGTH_SHORT).show();
         }
         else if(v==btn2){
-
-            Toast.makeText(this.getActivity(), "cancel", Toast.LENGTH_SHORT).show();
             this.dismiss();
         }
     }

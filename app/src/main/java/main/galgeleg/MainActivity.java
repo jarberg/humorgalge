@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Button btn1,btn2,btn3;
     GaleLogik spil = GaleLogik.get();
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn2.setOnClickListener(this);
         btn3 = findViewById(R.id.btn_highscore);
         btn3.setOnClickListener(this);
-
+        mp= MediaPlayer.create(getApplicationContext(), R.raw.click);
     }
 
     private void showEditDialog() {
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        mp.start();
         if( v == btn1 ){
             Intent i = new Intent(this, GameActivity.class);
             spil.nulstil();

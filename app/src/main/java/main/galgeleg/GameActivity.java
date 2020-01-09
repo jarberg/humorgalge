@@ -3,9 +3,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.media.MediaPlayer;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -31,6 +30,7 @@ public class GameActivity extends Activity implements OnItemClickListener, View.
     Button btnGues;
     EditText guessview;
     int gætforsoeg=0;
+    MediaPlayer mp;
 
     public GameActivity(){
         letters =new String[29];
@@ -45,6 +45,9 @@ public class GameActivity extends Activity implements OnItemClickListener, View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mp= MediaPlayer.create(this, R.raw.click);
+
         setContentView(R.layout.activity_game);
         createbodylinks();
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.letter, R.id.test, letters);
@@ -70,11 +73,12 @@ public class GameActivity extends Activity implements OnItemClickListener, View.
 
     @Override
     public void onClick(View v) {
+        mp.start();
         if(v.equals(btnGues)){
             guessword(guessview.getText().toString());
         }
         else if(v == guessview){
-
+            mp.start();
         }
     }
     public void guessword(String guess){
@@ -99,8 +103,6 @@ public class GameActivity extends Activity implements OnItemClickListener, View.
             Toast.makeText(this, "FORKERT!!", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
     public void wordString(){
         temp = spil.getSynligtOrd().toCharArray();
@@ -136,10 +138,12 @@ public class GameActivity extends Activity implements OnItemClickListener, View.
             for (int i = 0; i < spil.getAntalForkerteBogstaver()%7 ; i++) {
                 bodyParts[i].setVisibility(View.VISIBLE);
             }
+            adapter2.notifyDataSetChanged();
             wordView.setAdapter(null);
             wordString();
             adapter2 = new ArrayAdapter<>(this, R.layout.word, R.id.textLetter, word);
             wordView.setAdapter(adapter2);
+
         }
 
 
@@ -168,6 +172,4 @@ public class GameActivity extends Activity implements OnItemClickListener, View.
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mEtSearch.getWindowToken(), 0);
     }
-
-
 }

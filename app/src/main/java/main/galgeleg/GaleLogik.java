@@ -30,9 +30,7 @@ public class GaleLogik {
         return object;
     }
 
-
     private GaleLogik() {
-        /*
         muligeOrd.add("bil");
         muligeOrd.add("computer");
         muligeOrd.add("programmering");
@@ -42,10 +40,7 @@ public class GaleLogik {
         muligeOrd.add("skovsnegl");
         muligeOrd.add("solsort");
         muligeOrd.add("nitten");
-*/
-
-
-        //nulstil();
+        nulstil();
     }
 
     public ArrayList<String> getBrugteBogstaver() {
@@ -217,6 +212,24 @@ public class GaleLogik {
         Runnable runnable = () -> {
             try {
                 hentOrdFraDr();
+                System.out.println("success");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            finally{
+
+            }
+        };
+
+        t = new Thread(runnable);
+        t.start();
+
+    }
+    public void hentordfragoogleViaThread(String sværhedsgrader){
+        Runnable runnable = () -> {
+            try {
+                hentOrdFraRegneark(sværhedsgrader);
                 System.out.println("success");
             }
             catch (Exception e) {

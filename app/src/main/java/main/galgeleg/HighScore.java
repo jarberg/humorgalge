@@ -24,6 +24,8 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
     private static final String KEY_NAME = "key_username";
     private static final String KEY_SCORE = "key_score";
     int i =1;
+    String nameData = "test";
+    int scoreData = 0;
 
     Button btnRestart;
     private List<String> nameList;
@@ -42,26 +44,40 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
 
         btnRestart = findViewById(R.id.Restart);
         btnRestart.setOnClickListener(this);
-        String nameData = null;
-        int scoreData = 0;
+
+        //cleadata();
 
         loadSet();
 
+
+
         RecyclerView recyclerView = this.findViewById(R.id.devicerecycler);
         mAdapter = new DeviceAdapter(nameList, scoreList, this);
-        if (getIntent().hasExtra("name" ) && getIntent().hasExtra("score")) {
-            nameData = getIntent().getStringExtra("name");
-            scoreData = getIntent().getIntExtra("score",0);
-            enter_player(nameData+"", scoreData);
-        }
+
 
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-        saveSet();
 
+
+        if(getIntent().hasExtra("addname" ) ){
+            if(getIntent().getBooleanExtra("addname", false)){
+                addplayer();
+                saveSet();
+            }
+        }
+
+    }
+
+    public void addplayer(){
+        if (getIntent().hasExtra("name" ) && getIntent().hasExtra("score")) {
+            nameData = getIntent().getStringExtra("name");
+            scoreData = getIntent().getIntExtra("score",0);
+            enter_player(nameData+"", scoreData);
+        }
+        saveSet();
     }
 
     @Override
@@ -83,14 +99,14 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
         SharedPreferences sp = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
        try{
            String[] temp = sp.getString(KEY_NAME, null).replaceAll("\\W+"," ").trim().split(" ");
-           if(temp[0] != ""){
+           if(!temp[0].equals("")){
                List<String> nameTemp = Arrays.asList(temp);
                for (String s: nameTemp ) {
                    nameList.add(s);
                }
            }
            temp = sp.getString(KEY_SCORE, null).replaceAll("\\W+"," ").trim().split(" ");
-           if(temp[0] != "") {
+           if(!temp[0].equals("")) {
                List<Integer> tempint = new ArrayList<>();
                if (temp.length != 0) {
                    for (String s : temp) {
@@ -102,6 +118,13 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
        }
        catch (NullPointerException e){
        }
+    }
+
+    public void cleadata(){
+        SharedPreferences sp = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.clear().apply();
     }
 
     public void saveSet() {

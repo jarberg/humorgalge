@@ -76,6 +76,7 @@ public class Screen_end extends AppCompatActivity implements View.OnClickListene
 
             i.putExtra("name",temp+"");
             i.putExtra("score",score);
+            i.putExtra("addname", true);
             startActivity(i);
             finish();
         }

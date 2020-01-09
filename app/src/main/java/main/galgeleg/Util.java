@@ -9,11 +9,6 @@ public class Util {
     public Util get(){
         return this.object;
     }
-
-
     static final String CURRENTWORD ="currentword";
     static final String USEDBUTTONS ="usedbuttons";
-
-
-
 }

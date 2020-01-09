@@ -5,4 +5,5 @@
     <string name="play">play</string>
     <string name="help">help</string>
     <string name="guess">Guess</string>
+    <string name="greet">Hello</string>
 </resources>

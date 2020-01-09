@@ -42,7 +42,10 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.MyViewHold
     @Override @NonNull
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_row_highscore, parent, false);
-        itemView.setOnClickListener(onClick);
+
+        itemView.findViewById(R.id.turrække).setOnClickListener(onClick);
+        itemView.findViewById(R.id.number).setOnClickListener(onClick);
+        itemView.findViewById(R.id.rækkenavn).setOnClickListener(onClick);
         return new MyViewHolder(itemView);
     }
 

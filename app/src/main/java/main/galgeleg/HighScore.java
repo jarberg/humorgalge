@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -85,14 +86,21 @@ public class HighScore extends AppCompatActivity implements View.OnClickListener
        if(!v.equals(btnRestart)){
            SharedPreferences sp = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
            SharedPreferences.Editor editor = sp.edit();
-
-           editor.clear().apply();
        }
        else{
            Intent i = new Intent(this, MainActivity.class);
            startActivity(i);
            finish();
        }
+       if(v.getId() == R.id.turrække){
+           Toast.makeText(this, "Score: "+((TextView)v).getText(), Toast.LENGTH_SHORT).show();
+       }
+        if(v.getId() == R.id.number){
+            Toast.makeText(this, "rank: "+((TextView)v).getText(), Toast.LENGTH_SHORT).show();
+        }
+        if(v.getId() == R.id.rækkenavn){
+            Toast.makeText(this, "Spillernavn: "+((TextView)v).getText(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void loadSet(){

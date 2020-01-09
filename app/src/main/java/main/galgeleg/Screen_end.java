@@ -3,6 +3,7 @@ package main.galgeleg;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +20,7 @@ public class Screen_end extends AppCompatActivity implements View.OnClickListene
         TextView attemptsView;
         TextView wordview;
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -32,15 +34,19 @@ public class Screen_end extends AppCompatActivity implements View.OnClickListene
             attempts = getIntent().getExtras().getInt("attempts");
             if (yourDataObject) {
                 setContentView(R.layout.layout_screen_winner);
+                MediaPlayer mp = MediaPlayer.create(this, R.raw.win);
                 btn1Win = findViewById(R.id.accept);
                 btn1Win.setOnClickListener(this);
                 EditText tester= findViewById(R.id.nameview);
                 showKeyboard(tester, this);
+                mp.start();
             }
             else {
                 setContentView(R.layout.layout_screen_loser);
                 btn1loss = findViewById(R.id.Restart);
                 btn1loss.setOnClickListener(this);
+
+
             }
             attemptsView = findViewById(R.id.attempts);
             attemptsView.setText(String.valueOf(attempts));

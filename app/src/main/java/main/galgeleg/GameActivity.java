@@ -143,7 +143,7 @@ public class GameActivity extends Activity implements OnItemClickListener, View.
             wordString();
             adapter2 = new ArrayAdapter<>(this, R.layout.word, R.id.textLetter, word);
             wordView.setAdapter(adapter2);
-
+            mp.start();
         }
 
 

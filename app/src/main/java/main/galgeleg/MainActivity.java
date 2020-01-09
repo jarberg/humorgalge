@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn3 = findViewById(R.id.btn_highscore);
         btn3.setOnClickListener(this);
         mp= MediaPlayer.create(getApplicationContext(), R.raw.click);
+        mp.setVolume(2, 2);
+
     }
 
     private void showEditDialog() {

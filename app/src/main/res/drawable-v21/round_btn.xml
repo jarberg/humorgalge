@@ -1,0 +1,24 @@
+
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+android:color="?android:colorControlHighlight">
+<item
+    android:width="30dp"
+    android:height="30dp">
+    <shape
+        android:padding="5dp"
+        android:shape="oval" >
+        <solid android:color="#67CA94" />
+        <corners
+            android:bottomLeftRadius="15dp"
+            android:bottomRightRadius="15dp"
+            android:topLeftRadius="15dp"
+            android:topRightRadius="15dp" />
+    </shape>
+
+</item>
+    <item android:drawable="@drawable/cloud"
+        android:height="20dp"
+        android:width="20dp"
+        android:gravity="center"
+        />
+</ripple>

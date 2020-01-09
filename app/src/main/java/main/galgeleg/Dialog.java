@@ -68,11 +68,9 @@ public class Dialog extends DialogFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(getActivity(), test.getClass());
+        this.dismiss();
         if(v==btn1){
             startActivity(intent);
-        }
-        else if(v==btn2){
-            this.dismiss();
         }
     }
 }

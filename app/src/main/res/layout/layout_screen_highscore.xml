@@ -5,7 +5,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#FEFEFE"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="Spiller"
             android:textAlignment="center"
-            android:textColor="#ffffff"
+            android:textColor="#000000"
             android:textSize="30sp"
             android:textStyle="normal"
             android:visibility="visible"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:text="Rank"
             android:textAlignment="center"
-            android:textColor="#ffffff"
+            android:textColor="#000000"
             android:textSize="30sp"
             android:textStyle="normal"
             android:visibility="visible"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:text="Score"
             android:textAlignment="center"
-            android:textColor="#ffffff"
+            android:textColor="#000000"
             android:textSize="30sp"
             android:textStyle="normal"
             android:visibility="visible"
@@ -78,6 +78,7 @@
         android:id="@+id/devicerecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toTopOf="@+id/Restart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,9 +89,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
-        android:text="Restart"
+        android:text="Start menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="klik på et element for at slette listen"
+        app:layout_constraintBottom_toTopOf="@+id/Restart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/devicerecycler" />
 </androidx.constraintlayout.widget.ConstraintLayout>

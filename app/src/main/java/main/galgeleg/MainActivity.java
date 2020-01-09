@@ -12,7 +12,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import main.galgeleg.animation.AnimBtnUtil;
 
 import static java.lang.Thread.sleep;
 
@@ -20,6 +23,7 @@ import static java.lang.Thread.sleep;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btn1,btn2,btn3;
+    ImageView btn4;
     GaleLogik spil = GaleLogik.get();
     MediaPlayer mp;
 
@@ -34,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn2.setOnClickListener(this);
         btn3 = findViewById(R.id.btn_highscore);
         btn3.setOnClickListener(this);
+        btn4 = findViewById(R.id.dr);
+        btn4.setOnClickListener(this);
         mp= MediaPlayer.create(getApplicationContext(), R.raw.click);
         mp.setVolume(2, 2);
 
@@ -41,20 +47,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        Dialog editNameDialogFragment = Dialog.newInstance("Some Title", "Dette er hangman spillet\n Tryk på start for at spille\n du skal gætte ordet der er på skærmen\n tryk på det bogstav du mener er i ordet før du løber tør for legmsdele", new GameActivity());
+        Dialog editNameDialogFragment = Dialog.newInstance("Some Title", "Dette er hangman spillet\n Tryk på start for at spille\n du skal gætte ordet der er på skærmen\n tryk på det bogstav du mener er i ordet før du løber tør for legmsdele\ntryk på den grønne knap for at hente ord fra dr", new GameActivity());
         editNameDialogFragment.show(fm, "fragment_edit_name");
+
     }
 
     @Override
     public void onClick(View v) {
         mp.start();
+        AnimBtnUtil.bounce(v,this);
         if( v == btn1 ){
             Intent i = new Intent(this, GameActivity.class);
             try {
-                if(spil.t.isAlive()){
+                if(spil.t != null && spil.t.isAlive()){
                     Toast.makeText(this, "Henter ord fra dr", Toast.LENGTH_SHORT).show();
+                    spil.t.join();
                 }
-                spil.t.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -69,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             i.putExtra("addname", false);
             spil.nulstil();
             startActivity(i);
+        }
+        else{
+            spil.hentordfradrViaThread();
+            Toast.makeText(this, "Henter ord fra dr", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import main.galgeleg.animation.AnimBtnUtil;
+
 public class GameActivity extends Activity implements OnItemClickListener, View.OnClickListener {
     //body part images
     private ImageView[] bodyParts;
@@ -73,13 +75,18 @@ public class GameActivity extends Activity implements OnItemClickListener, View.
 
     @Override
     public void onClick(View v) {
-        mp.start();
+
         if(v.equals(btnGues)){
             guessword(guessview.getText().toString());
-        }
-        else if(v == guessview){
+            AnimBtnUtil.bounce(v, this);
             mp.start();
         }
+        else if(v == guessview){
+        }
+        else{
+
+        }
+
     }
     public void guessword(String guess){
         if(spil.getOrdet().equals(guess)){
@@ -119,7 +126,7 @@ public class GameActivity extends Activity implements OnItemClickListener, View.
             v.setBackgroundResource(R.drawable.letter_down);
             spil.gætBogstav(String.valueOf(Character.toLowerCase(ltr.charAt(0))));
             spil.logStatus();
-
+            AnimBtnUtil.bounce(v, this);
             if(spil.erSpilletSlut()){
                 float main = spil.getBrugteBogstaver().size();
                 float sec = spil.getAntalForkerteBogstaver();

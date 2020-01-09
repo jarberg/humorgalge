@@ -42,13 +42,6 @@ public class GaleLogik {
         muligeOrd.add("solsort");
         muligeOrd.add("nitten");
 
-        try {
-            hentordfradrViaThread();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         nulstil();
     }
 
@@ -225,9 +218,6 @@ public class GaleLogik {
             }
             catch (Exception e) {
                 e.printStackTrace();
-            }
-            finally{
-
             }
         };
 
